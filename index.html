@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Emissão de CO2</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-emoji" aria-hidden="true">🌿</span>
+      <h1>Calculadora de emissão de CO2</h1>
+      <p>Calcule as emissões de CO2 das suas viagens e contribua para um planeta mais sustentável.</p>
+    </div>
+  </header>
+
+  <main class="main-section">
+    <div class="card">
+      <form>
+        <div class="field-group">
+          <label for="originSearch">Origem</label>
+          <div class="custom-select" data-type="origin">
+            <div class="custom-select-control">
+              <input type="text" id="originSearch" placeholder="Digite ou selecione cidade de origem, UF" autocomplete="off">
+              <button type="button" class="custom-select-toggle" data-target="origin" aria-label="Abrir lista de capitais">▾</button>
+            </div>
+            <ul class="custom-select-list" id="originList" role="listbox"></ul>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="destinationSearch">Destino</label>
+          <div class="custom-select" data-type="destination">
+            <div class="custom-select-control">
+              <input type="text" id="destinationSearch" placeholder="Digite ou selecione cidade de destino, UF" autocomplete="off">
+              <button type="button" class="custom-select-toggle" data-target="destination" aria-label="Abrir lista de capitais">▾</button>
+            </div>
+            <ul class="custom-select-list" id="destinationList" role="listbox"></ul>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="distance">Distância (km)</label>
+          <input type="number" id="distance" name="distance" value="0" readonly>
+          <small>A distância será preenchida automaticamente.</small>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label" for="manualDistance">
+            <input type="checkbox" id="manualDistance">
+            Inserir distância manualmente
+          </label>
+        </div>
+      </form>
+    </div>
+
+    <section class="transport-panel">
+      <div class="transport-panel-header">
+        <p class="transport-panel-label">Escolher um meio de transporte</p>
+        <p class="transport-note">Uma lei do meio de transporte</p>
+      </div>
+
+      <div class="transport-grid">
+        <button type="button" class="transport-card" data-transport="bicicleta">🚲<span>Bicicleta</span></button>
+        <button type="button" class="transport-card" data-transport="carro">🚗<span>Carro</span></button>
+        <button type="button" class="transport-card" data-transport="onibus">🚌<span>Ônibus</span></button>
+        <button type="button" class="transport-card" data-transport="caminhao">🚚<span>Caminhão</span></button>
+      </div>
+
+      <button type="button" class="calculate-button">Calcular Emissão</button>
+    </section>
+
+    <section class="results-panel">
+      <div class="results-panel-header">
+        <p class="results-panel-title">Resultados da emissão</p>
+      </div>
+
+      <div class="results-grid">
+        <div class="results-card" id="result-route">Rota</div>
+        <div class="results-card" id="result-distance">Distância</div>
+        <div class="results-card" id="result-emission">Emissão de CO2</div>
+        <div class="results-card" id="result-transport">Meio de transporte</div>
+      </div>
+    </section>
+
+    <section class="transport-summary-panel">
+      <div class="transport-summary-header">
+        <p class="transport-summary-title">Meios de transporte</p>
+      </div>
+
+      <div class="transport-summary-grid">
+        <div class="transport-summary-card" data-mode="bicicleta">
+          <p class="summary-icon">🚲</p>
+          <p class="summary-name">Bicicleta</p>
+          <p class="summary-emission"><strong>0.00</strong> kg CO2</p>
+          <p class="summary-vs"><strong>0.00%</strong> <span class="summary-vs-text">vs carro</span></p>
+          <div class="summary-bar">
+            <div class="summary-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="transport-summary-card" data-mode="onibus">
+          <p class="summary-icon">🚌</p>
+          <p class="summary-name">Ônibus</p>
+          <p class="summary-emission"><strong>0.00</strong> kg CO2</p>
+          <p class="summary-vs"><strong>0.00%</strong> <span class="summary-vs-text">vs carro</span></p>
+          <div class="summary-bar">
+            <div class="summary-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="transport-summary-card" data-mode="carro">
+          <p class="summary-icon">🚗</p>
+          <p class="summary-name">Carro</p>
+          <p class="summary-emission"><strong>0.00</strong> kg CO2</p>
+          <p class="summary-vs"><strong>0.00%</strong> <span class="summary-vs-text">vs carro</span></p>
+          <div class="summary-bar">
+            <div class="summary-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="transport-summary-card" data-mode="caminhao">
+          <p class="summary-icon">🚚</p>
+          <p class="summary-name">Caminhão</p>
+          <p class="summary-emission"><strong>0.00</strong> kg CO2</p>
+          <p class="summary-vs"><strong>0.00%</strong> <span class="summary-vs-text">vs carro</span></p>
+          <div class="summary-bar">
+            <div class="summary-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <p class="tip-icon">💡</p>
+        <div>
+          <p class="tip-title">Dica:</p>
+          <p>Escolher meios de transportes mais sustentáveis ajuda a reduzir significativamente as emissões de CO2 e contribui para um planeta mais saudável!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="credits-panel">
+      <div class="credits-panel-header">
+        <p class="credits-panel-title">Créditos de carbono</p>
+      </div>
+
+      <div class="credits-grid">
+        <div class="credits-card">
+          <span class="credits-icon">🌳</span>
+          <p class="credits-title">Créditos necessários</p>
+          <p id="credits-needed" class="credits-value">0 créditos</p>
+          <p class="credits-note">1 crédito = 1000 kg CO2</p>
+        </div>
+        <div class="credits-card">
+          <span class="credits-icon">💵</span>
+          <p class="credits-title">Custo estimado</p>
+          <p id="credits-cost" class="credits-value">R$ 0,00</p>
+          <p id="credits-range" class="credits-range">R$ 2,58 – R$ 7,74 por crédito</p>
+        </div>
+      </div>
+
+      <div class="credits-info-card">
+        <p class="credits-info-title">O que são créditos de carbono</p>
+        <p class="credits-info-text">Créditos de carbono são certificados que representam a redução de uma tonelada de CO2 da atmosfera. Ao comprar créditos, você compensa as suas emissões, financiando os projetos de preservação ambiental, reflorestamento e energia renovável.</p>
+      </div>
+
+      <button type="button" class="compensate-button">Compensar emissões</button>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    Desenvolvido para a DIO | DIO | Projeto GitHub Copilot do Rafael
+  </footer>
+
+<script src="rotas.js"></script>
+<script src="config.calculadora.js"></script>
+    <script>
+    const manualDistanceCheckbox = document.getElementById('manualDistance');
+    const originInput = document.getElementById('originSearch');
+    const destinationInput = document.getElementById('destinationSearch');
+    const originList = document.getElementById('originList');
+    const destinationList = document.getElementById('destinationList');
+    const originToggle = document.querySelector('.custom-select-toggle[data-target="origin"]');
+    const destinationToggle = document.querySelector('.custom-select-toggle[data-target="destination"]');
+    const distanceInput = document.getElementById('distance');
+    const transportCards = document.querySelectorAll('.transport-card');
+    const capitalsList = window.capitaisList || [];
+    const routeDistances = window.rotasBR || {};
+
+    function getRouteDistance(origin, destination) {
+      const originValue = origin.trim();
+      const destinationValue = destination.trim();
+      if (!originValue || !destinationValue || originValue === destinationValue) {
+        return null;
+      }
+      const key = [originValue, destinationValue].sort().join('|');
+      return routeDistances[key] || null;
+    }
+
+    function closeAllLists() {
+      document.querySelectorAll('.custom-select-list.open').forEach(list => list.classList.remove('open'));
+    }
+
+    function populateList(listElement) {
+      listElement.innerHTML = '';
+      capitalsList.forEach(capital => {
+        const item = document.createElement('li');
+        item.className = 'custom-select-option';
+        item.textContent = capital;
+        item.tabIndex = 0;
+        item.addEventListener('click', () => {
+          const targetInput = listElement === originList ? originInput : destinationInput;
+          targetInput.value = capital;
+          listElement.classList.remove('open');
+          updateDistanceFromRoute();
+        });
+        item.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            item.click();
+          }
+        });
+        listElement.appendChild(item);
+      });
+    }
+
+    function filterList(listElement, searchValue) {
+      const lowerValue = searchValue.toLowerCase();
+      let anyVisible = false;
+      Array.from(listElement.children).forEach(item => {
+        const visible = item.textContent.toLowerCase().includes(lowerValue);
+        item.style.display = visible ? 'block' : 'none';
+        if (visible) { anyVisible = true; }
+      });
+      if (anyVisible) {
+        listElement.classList.add('open');
+      } else {
+        listElement.classList.remove('open');
+      }
+    }
+
+    function updateDistanceFromRoute() {
+      if (manualDistanceCheckbox.checked) {
+        return;
+      }
+      const distance = getRouteDistance(originInput.value, destinationInput.value);
+      distanceInput.value = distance !== null ? distance : '0';
+    }
+
+    const resultRoute = document.getElementById('result-route');
+    const resultDistance = document.getElementById('result-distance');
+    const resultEmission = document.getElementById('result-emission');
+    const resultTransport = document.getElementById('result-transport');
+    const summaryCards = document.querySelectorAll('.transport-summary-card');
+    const creditsNeeded = document.getElementById('credits-needed');
+    const creditsCost = document.getElementById('credits-cost');
+    const creditsRange = document.getElementById('credits-range');
+    const calculateButton = document.querySelector('.calculate-button');
+
+    function getSelectedTransport() {
+      const selected = document.querySelector('.transport-card.selected');
+      return selected ? selected.dataset.transport : null;
+    }
+
+    function formatRouteText(origin, destination) {
+      return `${origin} → ${destination}`;
+    }
+
+    function formatCurrency(value) {
+      return `R$ ${value.toFixed(2).replace('.', ',')}`;
+    }
+
+    function updateResultsDisplay() {
+      const originValue = originInput.value.trim();
+      const destinationValue = destinationInput.value.trim();
+      const transportValue = getSelectedTransport();
+      const distanceValue = Number(distanceInput.value);
+
+      if (!originValue || !destinationValue || originValue === destinationValue || !transportValue || distanceValue <= 0) {
+        resultRoute.textContent = 'Rota';
+        resultDistance.textContent = 'Distância';
+        resultEmission.textContent = 'Emissão de CO2';
+        resultTransport.textContent = 'Meio de transporte';
+        summaryCards.forEach(card => {
+          card.querySelector('.summary-emission strong').textContent = '0.00';
+          card.querySelector('.summary-vs strong').textContent = '0.00%';
+          card.querySelector('.summary-vs-text').textContent = `vs ${window.calculadoraConfig.getTransportLabel('carro')}`;
+          card.querySelector('.summary-bar-fill').style.width = '0%';
+        });
+        creditsNeeded.textContent = '0 créditos';
+        creditsCost.textContent = 'R$ 0,00';
+        creditsRange.textContent = 'R$ 2,58 – R$ 7,74 por crédito';
+        return;
+      }
+
+      const selectedLabel = window.calculadoraConfig.getTransportLabel(transportValue);
+      const selectedEmission = window.calculadoraConfig.calculateCO2(distanceValue, transportValue);
+      const selectedFactor = window.calculadoraConfig.getEmissionFactor(transportValue);
+
+      resultRoute.textContent = formatRouteText(originValue, destinationValue);
+      resultDistance.textContent = `${distanceValue} km`;
+      resultEmission.textContent = selectedEmission !== null
+        ? `${selectedEmission.toFixed(2)} kg CO2 (${selectedFactor.toFixed(2)} kg/km)`
+        : 'N/A';
+      resultTransport.textContent = selectedLabel;
+
+      summaryCards.forEach(card => {
+        const mode = card.dataset.mode;
+        const modeEmission = window.calculadoraConfig.calculateCO2(distanceValue, mode);
+        const modeFactor = window.calculadoraConfig.getEmissionFactor(mode);
+        const modeLabel = window.calculadoraConfig.getTransportLabel(mode);
+        const percent = selectedEmission > 0 ? (modeEmission / selectedEmission) * 100 : null;
+        const percentText = percent !== null ? `${percent.toFixed(2)}%` : modeEmission === 0 ? '0.00%' : 'N/A';
+        const barWidth = percent !== null ? Math.min(Math.max(percent, 4), 150) : modeEmission === 0 ? 4 : 100;
+
+        card.querySelector('.summary-emission strong').textContent = modeEmission !== null ? modeEmission.toFixed(2) : '0.00';
+        card.querySelector('.summary-vs strong').textContent = percentText;
+        card.querySelector('.summary-vs-text').textContent = `vs ${selectedLabel}`;
+        card.querySelector('.summary-bar-fill').style.width = `${barWidth}%`;
+      });
+
+      const totalCredits = selectedEmission / 1000;
+      const minCost = totalCredits * 2.58;
+      const maxCost = totalCredits * 7.74;
+      const avgCost = totalCredits * 5.16;
+
+      creditsNeeded.textContent = `${totalCredits.toFixed(2)} créditos`;
+      creditsCost.textContent = formatCurrency(avgCost);
+      creditsRange.textContent = `${formatCurrency(minCost)} – ${formatCurrency(maxCost)} por crédito`;
+    }
+
+    populateList(originList);
+    populateList(destinationList);
+
+    originInput.addEventListener('input', () => {
+      filterList(originList, originInput.value);
+      updateDistanceFromRoute();
+    });
+
+    destinationInput.addEventListener('input', () => {
+      filterList(destinationList, destinationInput.value);
+      updateDistanceFromRoute();
+    });
+
+    originToggle.addEventListener('click', () => {
+      const opened = originList.classList.toggle('open');
+      if (opened) {
+        closeAllLists();
+        originList.classList.add('open');
+      }
+    });
+
+    destinationToggle.addEventListener('click', () => {
+      const opened = destinationList.classList.toggle('open');
+      if (opened) {
+        closeAllLists();
+        destinationList.classList.add('open');
+      }
+    });
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.custom-select')) {
+        closeAllLists();
+      }
+    });
+
+    manualDistanceCheckbox.addEventListener('change', () => {
+      distanceInput.readOnly = !manualDistanceCheckbox.checked;
+      if (!manualDistanceCheckbox.checked) {
+        updateDistanceFromRoute();
+      }
+    });
+
+    transportCards.forEach(card => {
+      card.addEventListener('click', () => {
+        transportCards.forEach(item => item.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+
+    calculateButton.addEventListener('click', () => {
+      updateResultsDisplay();
+    });
+  </script>
+</body>
+</html>
